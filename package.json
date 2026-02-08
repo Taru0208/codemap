@@ -1,7 +1,7 @@
 {
-  "name": "codemap-cli",
-  "version": "0.1.0",
-  "description": "Generate a structural overview of your codebase — a smart tree that understands code",
+  "name": "codemap-gen",
+  "version": "1.0.0",
+  "description": "Generate a structural overview of your codebase — a smart tree that understands code, extracts signatures, and maps dependencies",
   "main": "src/index.js",
   "bin": {
     "codemap": "src/cli.js"
@@ -16,7 +16,28 @@
     "tree",
     "code-map",
     "cli",
-    "developer-tools"
+    "developer-tools",
+    "code-analysis",
+    "dependency-graph",
+    "mermaid",
+    "zero-dependency"
+  ],
+  "author": "Taru <taru0208@proton.me> (https://github.com/Taru0208)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Taru0208/codemap.git"
+  },
+  "homepage": "https://github.com/Taru0208/codemap",
+  "bugs": {
+    "url": "https://github.com/Taru0208/codemap/issues"
+  },
+  "files": [
+    "src/analyzer.js",
+    "src/formatter.js",
+    "src/cli.js",
+    "src/index.js",
+    "README.md",
+    "LICENSE"
   ],
   "license": "MIT",
   "engines": {

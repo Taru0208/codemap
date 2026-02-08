@@ -5,13 +5,13 @@ A CLI tool that generates a structural overview of your codebase. Think of it as
 ## Install
 
 ```
-npx codemap-cli
+npx codemap-gen
 ```
 
 Or install globally:
 
 ```
-npm install -g codemap-cli
+npm install -g codemap-gen
 ```
 
 ## Usage
