@@ -1,0 +1,25 @@
+{
+  "name": "codemap-cli",
+  "version": "0.1.0",
+  "description": "Generate a structural overview of your codebase — a smart tree that understands code",
+  "main": "src/index.js",
+  "bin": {
+    "codemap": "src/cli.js"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "node --test src/*.test.js"
+  },
+  "keywords": [
+    "codebase",
+    "analysis",
+    "tree",
+    "code-map",
+    "cli",
+    "developer-tools"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
