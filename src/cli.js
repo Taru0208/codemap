@@ -2,7 +2,7 @@
 
 import { resolve } from 'path';
 import { analyzeDirectory } from './analyzer.js';
-import { formatTree, formatSummary, formatMarkdown } from './formatter.js';
+import { formatTree, formatSummary, formatMarkdown, formatGraph } from './formatter.js';
 
 const args = process.argv.slice(2);
 const flags = new Set(args.filter(a => a.startsWith('-')));
@@ -17,6 +17,7 @@ Options:
   -s, --summary     Show summary statistics only
   -m, --markdown    Output as Markdown
   -j, --json        Output as JSON
+  -g, --graph       Output dependency graph as Mermaid
   -d, --max-depth N Maximum directory depth (default: unlimited)
   -i, --ignore      Additional ignore patterns (comma-separated)
   --no-gitignore    Don't read .gitignore
@@ -35,6 +36,7 @@ const targetDir = resolve(positional[0] || '.');
 const summaryOnly = flags.has('-s') || flags.has('--summary');
 const markdown = flags.has('-m') || flags.has('--markdown');
 const json = flags.has('-j') || flags.has('--json');
+const graph = flags.has('-g') || flags.has('--graph');
 const noGitignore = flags.has('--no-gitignore');
 
 let maxDepth = Infinity;
@@ -58,6 +60,8 @@ try {
 
   if (json) {
     console.log(JSON.stringify(result, null, 2));
+  } else if (graph) {
+    console.log(formatGraph(result));
   } else if (summaryOnly) {
     console.log(formatSummary(result));
   } else if (markdown) {

@@ -182,6 +182,49 @@ function extractSignatures(content, ext) {
   return signatures;
 }
 
+function extractImports(content, ext) {
+  const imports = [];
+  const lines = content.split('\n');
+
+  for (const line of lines) {
+    // JavaScript/TypeScript
+    if (['.js', '.mjs', '.cjs', '.ts', '.tsx', '.jsx'].includes(ext)) {
+      const importMatch = line.match(/(?:import\s+.*\s+from\s+|import\s+)['"]([^'"]+)['"]/);
+      if (importMatch) { imports.push(importMatch[1]); continue; }
+      const requireMatch = line.match(/require\s*\(\s*['"]([^'"]+)['"]\s*\)/);
+      if (requireMatch) { imports.push(requireMatch[1]); continue; }
+    }
+
+    // Python
+    if (['.py', '.pyw'].includes(ext)) {
+      const fromMatch = line.match(/^from\s+([\w.]+)\s+import/);
+      if (fromMatch) { imports.push(fromMatch[1]); continue; }
+      const importMatch = line.match(/^import\s+([\w.]+)/);
+      if (importMatch) { imports.push(importMatch[1]); continue; }
+    }
+
+    // Go
+    if (ext === '.go') {
+      const importMatch = line.match(/^\s*"([^"]+)"/);
+      if (importMatch) { imports.push(importMatch[1]); continue; }
+    }
+
+    // Rust
+    if (ext === '.rs') {
+      const useMatch = line.match(/^use\s+([\w:]+)/);
+      if (useMatch) { imports.push(useMatch[1]); continue; }
+    }
+
+    // C/C++
+    if (['.c', '.h', '.cpp', '.hpp', '.cc'].includes(ext)) {
+      const includeMatch = line.match(/^#include\s+["<]([^">]+)[">]/);
+      if (includeMatch) { imports.push(includeMatch[1]); continue; }
+    }
+  }
+
+  return imports;
+}
+
 async function analyzeFile(filePath, rootDir) {
   const name = basename(filePath);
   const ext = extname(filePath).toLowerCase();
@@ -197,6 +240,7 @@ async function analyzeFile(filePath, rootDir) {
     ext,
     lines: 0,
     signatures: [],
+    imports: [],
     isCode: CODE_EXTENSIONS.has(ext),
   };
 
@@ -207,6 +251,7 @@ async function analyzeFile(filePath, rootDir) {
       result.lines = content.split('\n').length;
       if (result.isCode) {
         result.signatures = extractSignatures(content, ext);
+        result.imports = extractImports(content, ext);
       }
     } catch {
       // Binary file or encoding issue — skip content analysis

@@ -27,6 +27,7 @@ codemap [directory] [options]
 | `-s, --summary` | Show summary statistics only |
 | `-m, --markdown` | Output as Markdown |
 | `-j, --json` | Output as JSON (pipeable) |
+| `-g, --graph` | Output dependency graph as Mermaid |
 | `-d, --max-depth N` | Maximum directory depth |
 | `-i, --ignore` | Additional ignore patterns (comma-separated) |
 | `--no-gitignore` | Don't read .gitignore |
@@ -56,6 +57,8 @@ codemap -i "*.test.js,*.spec.ts"
 **Languages:** JavaScript, TypeScript, Python, Go, Rust, C/C++, Java, Kotlin, Ruby, Shell, and 30+ more.
 
 **Signatures:** Functions, classes, methods, structs, interfaces, traits. Marks exported symbols. Supports JS/TS, Python, Go, Rust, C/C++, Java, Kotlin, Ruby, and Shell.
+
+**Imports:** Extracts import/require/use/include statements. Supports JS/TS, Python, Go, Rust, and C/C++.
 
 **Smart defaults:** Ignores `node_modules`, `.git`, `dist`, `build`, `__pycache__`, and other common directories. Reads `.gitignore` automatically.
 
@@ -97,6 +100,24 @@ Full analysis data as JSON — pipe to `jq`, feed to scripts, or integrate with 
 ```bash
 codemap -j | jq '.languages'
 codemap -j | jq '.files[] | select(.signatures | length > 0) | .name'
+```
+
+### Dependency graph (`-g`)
+
+Outputs a Mermaid diagram of internal file dependencies. Renders directly on GitHub.
+
+```bash
+codemap -g > DEPS.md
+```
+
+```mermaid
+graph LR
+  src_cli_js["src/cli.js"]
+  src_analyzer_js["src/analyzer.js"]
+  src_formatter_js["src/formatter.js"]
+
+  src_cli_js --> src_analyzer_js
+  src_cli_js --> src_formatter_js
 ```
 
 ## Zero dependencies
