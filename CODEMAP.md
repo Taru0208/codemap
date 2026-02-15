@@ -6,7 +6,7 @@
 | --- | --- |
 | Files | 9 |
 | Directories | 1 |
-| Lines of code | 991 |
+| Lines of code | 993 |
 | Total size | 30 KB |
 
 ## Languages
@@ -22,7 +22,7 @@
 - **`CODEMAP.md`** — Markdown, 49 lines
 - **`LICENSE`** — License, 22 lines
 - **`package.json`** — JSON, 47 lines
-- **`README.md`** — Markdown, 130 lines
+- **`README.md`** — Markdown, 132 lines
 
 ### `src/`
 
