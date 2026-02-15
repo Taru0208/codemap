@@ -1,5 +1,7 @@
 # codemap
 
+![Tests](https://github.com/Taru0208/codemap/actions/workflows/test.yml/badge.svg)
+
 A CLI tool that generates a structural overview of your codebase. Think of it as a smart `tree` that understands code — it identifies languages, extracts function signatures, and shows you what's inside each file.
 
 ## Install
